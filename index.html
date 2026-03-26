@@ -189,7 +189,7 @@
 <body>
   <div class="container">
     <h2>
-      v تركيبات العملاء
+       تركيبات العملاء
     </h2>
     <h2>
       Fiberization PORJECT
@@ -204,8 +204,8 @@
       <!-- <input type="text" id="empName" placeholder="اسم الموظف"> -->
       <select type="text" id="empName">
         <option value="" selected> اسم </option>
-        <option value="شركة"> "شركة </option>
-        <option value="سنترال">"سنترال</option>
+        <option value="شركة" > شركة </option>
+        <option value="سنترال" >سنترال</option>
       </select>
     </div>
     <div class="client-section">
@@ -433,14 +433,14 @@
       }
 
       // Validate Box (B)
-      if (!isNaN(valB) && valB >= 1 && valB <= 32) {
+      if (!isNaN(valB) && valB >= 1 && valB >= 32) {
         alert("خطأ: قيمة Box يجب أن تكون أرقام فقط");
         document.getElementById('valB').style.borderColor = "red";
         return null;
       }
 
       // Validate Term (T)
-      if (!isNaN(valT) && valT >= 1 && valT <= 16) {
+      if (!isNaN(valT) && valT >= 1 && valT >= 16) {
         alert(" يجب أن تكون أرقام فقط بين 1 و 16 ");
         document.getElementById('valT').style.borderColor = "red";
         return null;
