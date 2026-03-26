@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>
-    نظام بيانات تركيبات FTTH 
+    نظام بيانات تركيبات FTTH
   </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
@@ -189,7 +189,7 @@
 <body>
   <div class="container">
     <h2>
-       v تركيبات العملاء
+      v تركيبات العملاء
     </h2>
     <h2>
       Fiberization PORJECT
@@ -202,11 +202,11 @@
         بينات الموظف
       </label>
       <!-- <input type="text" id="empName" placeholder="اسم الموظف"> -->
-                <select type="text" id="empName">
-            <option value="" selected> اسم </option>
-            <option value="شركة">شركة</option>
-            <option value="سنترال">سنترال</option>
-            </select>
+      <select type="text" id="empName">
+        <option value="" selected> اسم </option>
+        <option value="شركة"> "شركة </option>
+        <option value="سنترال">"سنترال</option>
+      </select>
     </div>
     <div class="client-section">
       <label>
@@ -368,13 +368,13 @@
         alert("برجاء إكمال جميع البيانات");
         return null;
       }
-      if (landline.length == 7 ) {
+      if (landline.length == 7) {
         alert("خطأ: رقم الارضي يجب أن يكون 7 رقم");
         document.getElementById('landline').style.borderColor = "red";
         return null;
       }
       // 2. Numeric Validation: Mobile Number (Must be 11 digits)
-      if (mobile.length == 10 ) {
+      if (mobile.length == 10) {
         alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
         document.getElementById('mobile').style.borderColor = "red";
         return null;
@@ -412,35 +412,35 @@
       const valT = document.getElementById('valT').value.trim();
 
       // Validate X
-      if (!isNaN(valX) && valX <= 1 && valX >= 52) {
+      if (!isNaN(valX) && valX >= 1 && valX <= 52) {
         alert(" يجب أن تكون أرقام فقط بين 1 و 52 ");
         document.getElementById('valX').style.borderColor = "red";
         return null;
       }
 
       // Validate Hub (H)
-      if (!isNaN(valH) && valH <= 1 && valH >= 8) {
+      if (!isNaN(valH) && valH >= 1 && valH <= 8) {
         alert(" يجب أن تكون أرقام فقط بين 1 و 8 ");
         document.getElementById('valH').style.borderColor = "red";
         return null;
       }
 
       // Validate Link (L)
-      if (!isNaN(valL) && valL <= 1 && valL >= 8) {
+      if (!isNaN(valL) && valL >= 1 && valL <= 8) {
         alert(" يجب أن تكون أرقام فقط بين 1 و 4 ");
         document.getElementById('valL').style.borderColor = "red";
         return null;
       }
 
       // Validate Box (B)
-      if (!isNaN(valB) && valB <= 1 && valB >= 32) {
+      if (!isNaN(valB) && valB >= 1 && valB <= 32) {
         alert("خطأ: قيمة Box يجب أن تكون أرقام فقط");
         document.getElementById('valB').style.borderColor = "red";
         return null;
       }
 
       // Validate Term (T)
-      if (!isNaN(valT) && valT <= 1 && valT >= 16) {
+      if (!isNaN(valT) && valT >= 1 && valT <= 16) {
         alert(" يجب أن تكون أرقام فقط بين 1 و 16 ");
         document.getElementById('valT').style.borderColor = "red";
         return null;
