@@ -201,7 +201,12 @@
       <label>
         بينات الموظف
       </label>
-      <input type="text" id="empName" placeholder="اسم الموظف">
+      <!-- <input type="text" id="empName" placeholder="اسم الموظف"> -->
+                <select type="text" id="empName">
+            <option value="" selected> اسم </option>
+            <option value="15">شركة</option>
+            <option value="30">سنترال</option>
+            </select>
     </div>
     <div class="client-section">
       <label>
@@ -364,7 +369,7 @@
         return null;
       }
       if (landline.length !== 7 || isNaN(landline)) {
-        alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
+        alert("خطأ: رقم الموبايل يجب أن يكون 7 رقم");
         document.getElementById('landline').style.borderColor = "red";
         return null;
       }
