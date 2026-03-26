@@ -183,13 +183,39 @@
       font-size: 11px;
       letter-spacing: 0.5px;
     }
+
+    .shake {
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
+
+      75% {
+        transform: translateX(-5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
     <h2>
-       تركيبات العملاء
+      تركيبات العملاء
     </h2>
     <h2>
       Fiberization PORJECT
@@ -204,8 +230,8 @@
       <!-- <input type="text" id="empName" placeholder="اسم الموظف"> -->
       <select type="text" id="empName">
         <option value="" selected> اسم </option>
-        <option value="شركة" > شركة </option>
-        <option value="سنترال" >سنترال</option>
+        <option value="شركة"> شركة </option>
+        <option value="سنترال">سنترال</option>
       </select>
     </div>
     <div class="client-section">
@@ -258,11 +284,11 @@
       البيانات الفنية
     </label>
     <div class="tech-grid">
-      <input type="tel" id="valX" placeholder="XBOX" inputmode="numeric">
-      <input type="tel" id="valH" placeholder="HUB" inputmode="numeric">
-      <input type="tel" id="valL" placeholder="LINK" inputmode="numeric">
-      <input type="tel" id="valB" placeholder="BOX" inputmode="numeric">
-      <input type="tel" id="valT" placeholder="TERMINAL" inputmode="numeric">
+      <input type="number" id="valX" placeholder="XBOX" inputmode="numeric">
+      <input type="number" id="valH" placeholder="HUB" inputmode="numeric">
+      <input type="number" id="valL" placeholder="LINK" inputmode="numeric">
+      <input type="number" id="valB" placeholder="BOX" inputmode="numeric">
+      <input type="number" id="valT" placeholder="TERMINAL" inputmode="numeric">
     </div> </button>
     <button onclick="sendToCloudAndSave()" class="online-sheet-btn">
       إرسال أونلاين ☁️
@@ -345,17 +371,23 @@
     //     t: document.getElementById('valT').value
     //   };
     // }
+    function markInvalid(elementId) {
+      const element = document.getElementById(elementId);
+      element.classList.add('input-error');
+
+      // Remove the shake class after 400ms so it can be triggered again
+      setTimeout(() => {
+        element.classList.remove('input-error');
+      }, 400);
+    }
     function getFormData() {
-      const empName = document.getElementById('empName').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const cableLength = parseFloat(document.getElementById('cableLength').value);
 
       let isComplete = true;
-
       // 1. Basic empty field check
       const requiredIds = ['clientName', 'landline', 'mobile', 'address', 'isp', 'cableLength', 'valX', 'valH', 'valL', 'valB', 'valT'];
       requiredIds.forEach(id => {
         const el = document.getElementById(id);
+
         if (!el.value.trim()) {
           el.style.borderColor = "red";
           isComplete = false;
@@ -363,85 +395,84 @@
           el.style.borderColor = "#f3e5f5";
         }
       });
-
+      const empName = document.getElementById('empName').value.trim();
+      const landline = document.getElementById('landline').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const cableLength = parseFloat(document.getElementById('cableLength').value);
       if (!empName || !isComplete) {
-        alert("برجاء إكمال جميع البيانات");
+        // alert("برجاء إكمال جميع البيانات");
+        markInvalid('empName');
+        showStatus("برجاء إكمال جميع البيانات", "red");
         return null;
       }
-      if (landline.length == 7) {
-        alert("خطأ: رقم الارضي يجب أن يكون 7 رقم");
+      if (!(!isNaN(landline) && landline.length == 7)) {
+        // alert("خطأ: رقم الارضي يجب أن يكون 7 رقم");
+        markInvalid('landline');
+        showStatus("خطأ: رقم الارضي يجب أن يكون 7 رقم", "red");
         document.getElementById('landline').style.borderColor = "red";
         return null;
       }
       // 2. Numeric Validation: Mobile Number (Must be 11 digits)
-      if (mobile.length == 10) {
-        alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
+      if (!(!isNaN(mobile) && mobile.length == 11)) {
+        // alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
+        markInvalid('mobile');
+        showStatus("خطأ: رقم الموبايل يجب أن يكون 11 رقم ", "red");
         document.getElementById('mobile').style.borderColor = "red";
         return null;
       }
 
-      // 3. Numeric Validation: Cable Length (e.g., limit between 1 and 500 meters)
-      // if (cableLength < 1 || cableLength > 80) {
-      //   alert("خطأ: طول الكابل يجب أن يكون بين 1 و 500 متر");
-      //   document.getElementById('cableLength').style.borderColor = "red";
-      //   return null;
-      // }
       if (cableLength === "") {
-        alert("خطأ: برجاء اختيار طول الكابل من القائمة");
+        // alert("خطأ: برجاء اختيار طول الكابل من القائمة");
+        markInvalid('cableLength');
+        showStatus("خطأ: برجاء اختيار طول الكابل من القائمة", "red");
         document.getElementById('cableLength').style.borderColor = "red";
         return null;
       } else {
         document.getElementById('cableLength').style.borderColor = "#f3e5f5";
       }
 
-      // 4. Numeric Validation: Technical Values (X, H, L, B, T usually 1-2 digits)
-      // const techFields = ['valX', 'valH', 'valL', 'valB', 'valT'];
-      // for (let id of techFields) {
-      //   const val = document.getElementById(id).value;
-      //   if (val.length > 3) {
-      //     alert("خطأ: القيم الفنية لا يمكن أن تتجاوز 3 أرقام");
-      //     document.getElementById(id).style.borderColor = "red";
-      //     return null;
-      //   }
-      // }
       // 4. Detailed Validation for Technical Fields
       const valX = document.getElementById('valX').value.trim();
       const valH = document.getElementById('valH').value.trim();
       const valL = document.getElementById('valL').value.trim();
       const valB = document.getElementById('valB').value.trim();
       const valT = document.getElementById('valT').value.trim();
-
       // Validate X
-      if (!isNaN(valX) && valX >= 1 && valX <= 52) {
-        alert(" يجب أن تكون أرقام فقط بين 1 و 52 ");
+      if (!(!isNaN(valX) && valX > 0 && valX < 53)) {
+        markInvalid('valX');
+        showStatus("خطأ: قيمة XBOX يجب أن تكون بين 1 و 52", "red");
         document.getElementById('valX').style.borderColor = "red";
         return null;
       }
 
       // Validate Hub (H)
-      if (!isNaN(valH) && valH >= 1 && valH <= 8) {
-        alert(" يجب أن تكون أرقام فقط بين 1 و 8 ");
+      if (!(!isNaN(valH) && valH >= 1 && valH <= 8)) {
+        markInvalid('valH');
+        showStatus("خطأ: قيمة HUB يجب أن تكون بين 1 و 8", "red");
         document.getElementById('valH').style.borderColor = "red";
         return null;
       }
 
       // Validate Link (L)
-      if (!isNaN(valL) && valL >= 1 && valL <= 8) {
-        alert(" يجب أن تكون أرقام فقط بين 1 و 4 ");
+      if (!(!isNaN(valL) && valL >= 1 && valL <= 4)) {
+        markInvalid('valL');
+        showStatus("خطأ: قيمة Link يجب أن تكون بين 1 و 4", "red");
         document.getElementById('valL').style.borderColor = "red";
         return null;
       }
 
       // Validate Box (B)
-      if (!isNaN(valB) && valB >= 1 && valB >= 32) {
-        alert("خطأ: قيمة Box يجب أن تكون أرقام فقط");
+      if (!(!isNaN(valB) && valB >= 1 && valB <= 32)) {
+        markInvalid('valB');
+        showStatus("خطأ: قيمة BOX ", "red");
         document.getElementById('valB').style.borderColor = "red";
         return null;
       }
 
       // Validate Term (T)
-      if (!isNaN(valT) && valT >= 1 && valT >= 16) {
-        alert(" يجب أن تكون أرقام فقط بين 1 و 16 ");
+      if (!(!isNaN(valT) && valT >= 1 && valT <= 16)) {
+        markInvalid('valT');
+        showStatus("خطأ: قيمة الترمنال يجب ان يكون 1 و 16 ", "red");
         document.getElementById('valT').style.borderColor = "red";
         return null;
       }
@@ -467,6 +498,8 @@
         t: document.getElementById('valT').value
       };
     }
+
+
     function clearFields() {
       ['clientName', 'landline', 'mobile', 'address', 'isp', 'cableLength', 'valX', 'valH', 'valL', 'valB', 'valT'].forEach(id => {
         document.getElementById(id).value = "";
