@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>
+    نظام بيانات تركيبات FTTH
+  </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+      padding: 15px;
+      text-align: center;
+      min-height: 100vh;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 500px;
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(106, 27, 154, 0.1);
+      margin: 10px auto;
+    }
+
+    .user-section {
+      background: #f3e5f5;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #9c27b0;
+    }
+
+    .client-section {
+      background: #fafafa;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #e0e0e0;
+    }
+
+    h2 {
+      color: #6a1b9a;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #4a148c;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0 15px 0;
+      border: 2px solid #f3e5f5;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input:focus {
+      border-color: #9c27b0;
+    }
+
+    .grid-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      direction: ltr;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 17px;
+      margin-top: 10px;
+      font-weight: bold;
+      color: white;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .save-local-btn {
+      background: #8e24aa;
+    }
+
+    .online-sheet-btn {
+      background: #4a148c;
+    }
+
+    .export-btn {
+      background: #6a1b9a;
+      width: 90%;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .clear-btn {
+      background: #dc3545;
+      width: 90%;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    #status {
+      margin-top: 15px;
+      min-height: 20px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .counter {
+      font-size: 13px;
+      color: #7b1fa2;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .footer-credit {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      font-size: 12px;
+      color: #6a1b9a;
+      line-height: 1.6;
+    }
+
+    .footer-credit b {
+      color: #4a148c;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .dev-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .dev-item {
+      background: #f8f0fc;
+      padding: 10px;
+      border-radius: 8px;
+      border-right: 3px solid #9c27b0;
+      text-align: right;
+    }
+
+    .dev-item i {
+      color: #25D366;
+      margin-right: 5px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    .tags {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #8e24aa;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>
+      تركيبات العملاء
+    </h2>
+    <h2>
+      Fiberization PORJECT
+    </h2>
+    <h2>
+      إدخال بينات العملاء 💪💜
+    </h2>
+    <div class="user-section">
+      <label>
+        بينات الموظف
+      </label>
+      <input type="text" id="empName" placeholder="اسم الموظف">
+    </div>
+    <div class="client-section">
+      <label>
+        بينات العميل
+      </label>
+      <input type="text" id="clientName" placeholder="اسم العميل">
+      <input type="tel" id="landline" placeholder="الرقم الأرضي" inputmode="numeric">
+      <input type="tel" id="mobile" placeholder="رقم الموبايل" inputmode="numeric">
+      <input type="text" id="address" placeholder="العنوان بالتفصيل">
+      <div class="grid-inputs">
+        <div>
+          <label>
+            شركه الانترنت
+          </label>
+          <select id="isp">
+            <option value="WE" selected>
+              WE
+            </option>
+            <option value="Vodafone">
+              Vodafone
+            </option>
+            <option value="Orange">
+              Orange
+            </option>
+            <option value="Etisalat">
+              Etisalat
+            </option>
+            <option value="Other">
+              أخرى
+            </option>
+          </select>
+        </div>
+        <div>
+          <label>
+            طول الكابل (متر)
+          </label>
+          <select type="number" id="cableLength">
+            <option value="" selected> اختر </option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="80">80</option>
+          </select>
+          <!-- <input type="number" id="cableLength" placeholder="50" inputmode="numeric">  -->
+        </div>
+      </div>
+    </div>
+    <label>
+      البيانات الفنية
+    </label>
+    <div class="tech-grid">
+      <input type="tel" id="valX" placeholder="XBOX" inputmode="numeric">
+      <input type="tel" id="valH" placeholder="HUB" inputmode="numeric">
+      <input type="tel" id="valL" placeholder="LINK" inputmode="numeric">
+      <input type="tel" id="valB" placeholder="BOX" inputmode="numeric">
+      <input type="tel" id="valT" placeholder="TERMINAL" inputmode="numeric">
+    </div> </button>
+    <button onclick="sendToCloudAndSave()" class="online-sheet-btn">
+      إرسال أونلاين ☁️
+    </button>
+    <div id="status">
+    </div>
+    <div class="counter" id="recordCount">
+      المسجل محلياً: 0 | في انتظار الإرسال: 0
+    </div>
+    <hr style="border:0; border-top:1px solid #f3e5f5; margin:20px 0;">
+    <button class="export-btn" onclick="exportToExcel()">
+      تنزيل إكسيل (.xls) 📥
+    </button>
+    <button class="clear-btn" onclick="clearAllData()">
+      مسح الذاكرة 🗑️
+    </button>
+    <div class="footer-credit">
+      <b>
+        Powered by
+      </b>
+      <div class="dev-info">
+        <div class="dev-item">
+          ENG. AYMAN ABO EL HASAN
+          <br><br>
+          RAFAEL HANY SHENOUDA
+        </div>
+
+      </div>
+      <div class="tags">
+        ALEXANDRIA SECTOR || FIRTST REGION || AUTO EXCHANGE
+      </div>
+    </div>
+  </div>
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxoSSV5A67lyaokUoqpzW1-PWmPkT-s9SxhoA2azY3ycuumHXAGHlyYxXscfI0Vbi0N5g/exec';
+
+    let allData = JSON.parse(localStorage.getItem('savedClients')) || [];
+    let uploadQueue = JSON.parse(localStorage.getItem('uploadQueue')) || [];
+
+    updateCounter();
+    // محاولة إرسال أي بيانات عالقة بمجرد فتح الصفحة
+    if (navigator.onLine) processQueue();
+
+    function updateCounter() {
+      document.getElementById('recordCount').innerHTML = `المسجل محلياً: ${allData.length}
+                                          <br>
+                                            في انتظار الإرسال لعدم وجود انترنت(offline):ملف ${uploadQueue.length}`;
+    }
+
+    // function getFormData() {
+    //   const empName = document.getElementById('empName').value.trim();
+    //   const requiredIds = ['clientName', 'landline', 'mobile', 'address', 'isp', 'cableLength', 'valX', 'valH', 'valL', 'valB', 'valT'];
+    //   let isComplete = true;
+
+    //   requiredIds.forEach(id => {
+    //     const el = document.getElementById(id);
+    //     if (!el.value.trim()) {
+    //       el.style.borderColor = "red";
+    //       isComplete = false;
+    //     } else {
+    //       el.style.borderColor = "#f3e5f5";
+    //     }
+    //   });
+
+    //   if (!empName || !isComplete) { alert("برجاء إكمال البيانات"); return null; }
+
+    //   return {
+    //     time: new Date().toLocaleString('ar-EG'),
+    //     empName,
+    //     clientName: document.getElementById('clientName').value,
+    //     landline: document.getElementById('landline').value,
+    //     mobile: document.getElementById('mobile').value,
+    //     address: document.getElementById('address').value,
+    //     isp: document.getElementById('isp').value,
+    //     cableLength: document.getElementById('cableLength').value,
+    //     x: document.getElementById('valX').value,
+    //     h: document.getElementById('valH').value,
+    //     l: document.getElementById('valL').value,
+    //     b: document.getElementById('valB').value,
+    //     t: document.getElementById('valT').value
+    //   };
+    // }
+    function getFormData() {
+      const empName = document.getElementById('empName').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const cableLength = parseFloat(document.getElementById('cableLength').value);
+
+      let isComplete = true;
+
+      // 1. Basic empty field check
+      const requiredIds = ['clientName', 'landline', 'mobile', 'address', 'isp', 'cableLength', 'valX', 'valH', 'valL', 'valB', 'valT'];
+      requiredIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.style.borderColor = "red";
+          isComplete = false;
+        } else {
+          el.style.borderColor = "#f3e5f5";
+        }
+      });
+
+      if (!empName || !isComplete) {
+        alert("برجاء إكمال جميع البيانات");
+        return null;
+      }
+      if (landline.length !== 7 || isNaN(landline)) {
+        alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
+        document.getElementById('landline').style.borderColor = "red";
+        return null;
+      }
+      // 2. Numeric Validation: Mobile Number (Must be 11 digits)
+      if (mobile.length !== 11 || isNaN(mobile)) {
+        alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
+        document.getElementById('mobile').style.borderColor = "red";
+        return null;
+      }
+
+      // 3. Numeric Validation: Cable Length (e.g., limit between 1 and 500 meters)
+      // if (cableLength < 1 || cableLength > 80) {
+      //   alert("خطأ: طول الكابل يجب أن يكون بين 1 و 500 متر");
+      //   document.getElementById('cableLength').style.borderColor = "red";
+      //   return null;
+      // }
+      if (cableLength === "") {
+        alert("خطأ: برجاء اختيار طول الكابل من القائمة");
+        document.getElementById('cableLength').style.borderColor = "red";
+        return null;
+      } else {
+        document.getElementById('cableLength').style.borderColor = "#f3e5f5";
+      }
+
+      // 4. Numeric Validation: Technical Values (X, H, L, B, T usually 1-2 digits)
+      // const techFields = ['valX', 'valH', 'valL', 'valB', 'valT'];
+      // for (let id of techFields) {
+      //   const val = document.getElementById(id).value;
+      //   if (val.length > 3) {
+      //     alert("خطأ: القيم الفنية لا يمكن أن تتجاوز 3 أرقام");
+      //     document.getElementById(id).style.borderColor = "red";
+      //     return null;
+      //   }
+      // }
+      // 4. Detailed Validation for Technical Fields
+      const valX = document.getElementById('valX').value.trim();
+      const valH = document.getElementById('valH').value.trim();
+      const valL = document.getElementById('valL').value.trim();
+      const valB = document.getElementById('valB').value.trim();
+      const valT = document.getElementById('valT').value.trim();
+
+      // Validate X
+      if (!isNaN(num) && num >= 1 && num <= 52) {
+        alert(" يجب أن تكون أرقام فقط بين 1 و 52 ");
+        document.getElementById('valX').style.borderColor = "red";
+        return null;
+      }
+
+      // Validate Hub (H)
+      if (!isNaN(num) && num >= 1 && num <= 8) {
+        alert(" يجب أن تكون أرقام فقط بين 1 و 8 ");
+        document.getElementById('valH').style.borderColor = "red";
+        return null;
+      }
+
+      // Validate Link (L)
+      if (!isNaN(num) && num >= 1 && num <= 8) {
+        alert(" يجب أن تكون أرقام فقط بين 1 و 4 ");
+        document.getElementById('valL').style.borderColor = "red";
+        return null;
+      }
+
+      // Validate Box (B)
+      if (!isNaN(num) && num >= 1 && num <= 32) {
+        alert("خطأ: قيمة Box يجب أن تكون أرقام فقط");
+        document.getElementById('valB').style.borderColor = "red";
+        return null;
+      }
+
+      // Validate Term (T)
+      if (!isNaN(num) && num >= 1 && num <= 16) {
+        alert(" يجب أن تكون أرقام فقط بين 1 و 16 ");
+        document.getElementById('valT').style.borderColor = "red";
+        return null;
+      }
+
+      // Reset colors if all pass
+      ['valX', 'valH', 'valL', 'valB', 'valT'].forEach(id => {
+        document.getElementById(id).style.borderColor = "#f3e5f5";
+      });
+
+      return {
+        time: new Date().toLocaleString('en-US'),
+        empName,
+        clientName: document.getElementById('clientName').value,
+        landline: document.getElementById('landline').value,
+        mobile: mobile,
+        address: document.getElementById('address').value,
+        isp: document.getElementById('isp').value,
+        cableLength: cableLength,
+        x: document.getElementById('valX').value,
+        h: document.getElementById('valH').value,
+        l: document.getElementById('valL').value,
+        b: document.getElementById('valB').value,
+        t: document.getElementById('valT').value
+      };
+    }
+    function clearFields() {
+      ['clientName', 'landline', 'mobile', 'address', 'isp', 'cableLength', 'valX', 'valH', 'valL', 'valB', 'valT'].forEach(id => {
+        document.getElementById(id).value = "";
+        document.getElementById(id).style.borderColor = "#f3e5f5";
+      });
+    }
+
+    function saveLocalOnly() {
+      const data = getFormData();
+      if (!data) return;
+      allData.push(data);
+      localStorage.setItem('savedClients', JSON.stringify(allData));
+      clearFields();
+      updateCounter();
+      showStatus("تم الحفظ محلياً ✅", "#8e24aa");
+    }
+
+    function sendToCloudAndSave() {
+      const data = getFormData();
+      if (!data) return;
+
+      allData.push(data);
+      localStorage.setItem('savedClients', JSON.stringify(allData));
+
+      uploadQueue.push(data);
+      localStorage.setItem('uploadQueue', JSON.stringify(uploadQueue));
+
+      clearFields();
+      updateCounter();
+      processQueue();
+    }
+
+    async function processQueue() {
+      if (uploadQueue.length === 0) return;
+
+      if (!navigator.onLine) {
+        showStatus("لا يوجد إنترنت، سيتم الإرسال تلقائياً عند الاتصال 📡", "#f39c12");
+        return;
+      }
+
+      showStatus(`جاري مزامنة ${uploadQueue.length} من البيانات... ⏳`, "#6a1b9a");
+
+      while (uploadQueue.length >
+        0) {
+        const item = uploadQueue[0];
+        try {
+          await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(item) });
+          uploadQueue.shift();
+          localStorage.setItem('uploadQueue', JSON.stringify(uploadQueue));
+          updateCounter();
+        } catch (error) {
+          console.error("إيقاف المزامنة بسبب خطأ:", error);
+          break;
+        }
+      }
+
+      if (uploadQueue.length === 0) {
+        showStatus("تم مزامنة جميع البيانات بنجاح! ☁️✅", "#4a148c");
+        setTimeout(() =>
+          showStatus("", ""), 3000);
+      }
+    }
+
+    function showStatus(text, color) {
+      const s = document.getElementById('status');
+      s.style.color = color;
+      s.innerText = text;
+    }
+
+    window.addEventListener('online', () => {
+      showStatus("تم استعادة الإنترنت، جاري المزامنة... 📶", "green");
+      processQueue();
+    });
+
+    window.addEventListener('offline', () => {
+      showStatus("أنت الآن أوفلاين، سيتم حفظ البيانات مؤقتاً ⚠️", "orange");
+    });
+
+    function exportToExcel() {
+      if (allData.length === 0) { alert("لا توجد بيانات!"); return; }
+      let excelData = `
+                                            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                                              <head>
+                                                <meta charset="UTF-8">
+                                                </head>
+                                                <body>
+                                                  <table border="1">
+                                                    <tr style="background-color:#6a1b9a; color:white;">
+                                                      <th>
+                                                        الوقت
+                                                      </th>
+                                                      <th>
+                                                        الموظف
+                                                      </th>
+                                                      <th>
+                                                        العميل
+                                                      </th>
+                                                      <th>
+                                                        الأرضي
+                                                      </th>
+                                                      <th>
+                                                        الموبايل
+                                                      </th>
+                                                      <th>
+                                                        العنوان
+                                                      </th>
+                                                      <th>
+                                                        الشركة
+                                                      </th>
+                                                      <th>
+                                                        طول الكابل
+                                                      </th>
+                                                      <th>
+                                                        X
+                                                      </th>
+                                                      <th>
+                                                        H
+                                                      </th>
+                                                      <th>
+                                                        L
+                                                      </th>
+                                                      <th>
+                                                        B
+                                                      </th>
+                                                      <th>
+                                                        T
+                                                      </th>
+                                                    </tr>
+                                                    `;
+      allData.forEach(i => {
+        excelData += `
+                                                    <tr>
+                                                      <td>
+                                                        ${i.time}
+                                                      </td>
+                                                      <td>
+                                                        ${i.empName}
+                                                      </td>
+                                                      <td>
+                                                        ${i.clientName}
+                                                      </td>
+                                                      <td>
+                                                        ${i.landline}
+                                                      </td>
+                                                      <td>
+                                                        ${i.mobile}
+                                                      </td>
+                                                      <td>
+                                                        ${i.address}
+                                                      </td>
+                                                      <td>
+                                                        ${i.isp}
+                                                      </td>
+                                                      <td>
+                                                        ${i.cableLength}
+                                                      </td>
+                                                      <td>
+                                                        ${i.x}
+                                                      </td>
+                                                      <td>
+                                                        ${i.h}
+                                                      </td>
+                                                      <td>
+                                                        ${i.l}
+                                                      </td>
+                                                      <td>
+                                                        ${i.b}
+                                                      </td>
+                                                      <td>
+                                                        ${i.t}
+                                                      </td>
+                                                    </tr>
+                                                    `;
+      });
+      excelData += `
+                                                  </table>
+                                                </body>
+                                              </html>
+                                              `;
+      const blob = new Blob([excelData], { type: 'application/vnd.ms-excel' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `FTTH_Data_Backup.xls`;
+      link.click();
+    }
+
+    function clearAllData() {
+      if (confirm("هل أنت متأكد؟ سيتم مسح الأرشيف المحلي وقائمة المزامنة نهائياً!")) {
+        allData = [];
+        uploadQueue = [];
+        localStorage.removeItem('savedClients');
+        localStorage.removeItem('uploadQueue');
+        updateCounter();
+        showStatus("تم مسح الذاكرة 🗑️", "red");
+      }
+    }
+  </script>
+</body>
+
+</html>
