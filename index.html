@@ -368,13 +368,13 @@
         alert("برجاء إكمال جميع البيانات");
         return null;
       }
-      if (landline.length !== 7 || !isNaN(landline)) {
+      if (landline.length === 7 || isNaN(landline)) {
         alert("خطأ: رقم الارضي يجب أن يكون 7 رقم");
         document.getElementById('landline').style.borderColor = "red";
         return null;
       }
       // 2. Numeric Validation: Mobile Number (Must be 11 digits)
-      if (mobile.length !== 11 || !isNaN(mobile)) {
+      if (mobile.length === 11 || isNaN(mobile)) {
         alert("خطأ: رقم الموبايل يجب أن يكون 11 رقم");
         document.getElementById('mobile').style.borderColor = "red";
         return null;
