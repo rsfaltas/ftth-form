@@ -185,7 +185,7 @@
                                           </div>
                                         </div>
                                         <script>
-                                          const scriptURL = 'https://script.google.com/macros/s/AKfycbw6rlSf-1gjY_VxwiAdcfjxEzlpfW9JqeUEwfRds7hgN--2mRjtmaaE3IB9RwZdE4ZKsA/exec'; 
+                                          const scriptURL = 'https://script.google.com/macros/s/AKfycbxoSSV5A67lyaokUoqpzW1-PWmPkT-s9SxhoA2azY3ycuumHXAGHlyYxXscfI0Vbi0N5g/exec'; 
     
     let allData = JSON.parse(localStorage.getItem('savedClients')) || [];
     let uploadQueue = JSON.parse(localStorage.getItem('uploadQueue')) || [];
@@ -253,20 +253,20 @@
         showStatus("تم الحفظ محلياً ✅", "#8e24aa");
     }
 
-    // function sendToCloudAndSave() {
-    //     const data = getFormData();
-    //     if (!data) return;
+    function sendToCloudAndSave() {
+        const data = getFormData();
+        if (!data) return;
 
-    //     allData.push(data);
-    //     localStorage.setItem('savedClients', JSON.stringify(allData));
+        allData.push(data);
+        localStorage.setItem('savedClients', JSON.stringify(allData));
 
-    //     uploadQueue.push(data);
-    //     localStorage.setItem('uploadQueue', JSON.stringify(uploadQueue));
+        uploadQueue.push(data);
+        localStorage.setItem('uploadQueue', JSON.stringify(uploadQueue));
 
-    //     clearFields();
-    //     updateCounter();
-    //     processQueue();
-    // }
+        clearFields();
+        updateCounter();
+        processQueue();
+    }
 
     async function processQueue() {
         if (uploadQueue.length === 0) return;
@@ -316,50 +316,114 @@
         showStatus("أنت الآن أوفلاين، سيتم حفظ البيانات مؤقتاً ⚠️", "orange");
     });
 
- function exportToExcel() {
-    if (!allData || allData.length === 0) {
-        alert("لا توجد بيانات!");
-        return;
-    }
-
-    // Use backticks (`) for multi-line strings and variable interpolation
-    let excelData = `
-    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-    <head><meta charset="UTF-8"></head>
-    <body>
-        <table border="1">
-            <tr style="background-color:#6a1b9a; color:white;">
-                <th>الوقت</th><th>الموظف</th><th>العميل</th><th>الأرضي</th><th>الموبايل</th>
-                <th>العنوان</th><th>الشركة</th><th>طول الكابل</th><th>X</th><th>H</th><th>L</th><th>B</th><th>T</th>
-            </tr>`;
-
-    allData.forEach(i => {
+    function exportToExcel() {
+        if(allData.length === 0) { alert("لا توجد بيانات!"); return; }
+        let excelData = `
+                                            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                                              <head>
+                                                <meta charset="UTF-8">
+                                                </head>
+                                                <body>
+                                                  <table border="1">
+                                                    <tr style="background-color:#6a1b9a; color:white;">
+                                                      <th>
+                                                        الوقت
+                                                      </th>
+                                                      <th>
+                                                        الموظف
+                                                      </th>
+                                                      <th>
+                                                        العميل
+                                                      </th>
+                                                      <th>
+                                                        الأرضي
+                                                      </th>
+                                                      <th>
+                                                        الموبايل
+                                                      </th>
+                                                      <th>
+                                                        العنوان
+                                                      </th>
+                                                      <th>
+                                                        الشركة
+                                                      </th>
+                                                      <th>
+                                                        طول الكابل
+                                                      </th>
+                                                      <th>
+                                                        X
+                                                      </th>
+                                                      <th>
+                                                        H
+                                                      </th>
+                                                      <th>
+                                                        L
+                                                      </th>
+                                                      <th>
+                                                        B
+                                                      </th>
+                                                      <th>
+                                                        T
+                                                      </th>
+                                                    </tr>
+                                                    `;
+        allData.forEach(i =>
+                                                    {
+            excelData += `
+                                                    <tr>
+                                                      <td>
+                                                        ${i.time}
+                                                      </td>
+                                                      <td>
+                                                        ${i.empName}
+                                                      </td>
+                                                      <td>
+                                                        ${i.clientName}
+                                                      </td>
+                                                      <td>
+                                                        ${i.landline}
+                                                      </td>
+                                                      <td>
+                                                        ${i.mobile}
+                                                      </td>
+                                                      <td>
+                                                        ${i.address}
+                                                      </td>
+                                                      <td>
+                                                        ${i.isp}
+                                                      </td>
+                                                      <td>
+                                                        ${i.cableLength}
+                                                      </td>
+                                                      <td>
+                                                        ${i.x}
+                                                      </td>
+                                                      <td>
+                                                        ${i.h}
+                                                      </td>
+                                                      <td>
+                                                        ${i.l}
+                                                      </td>
+                                                      <td>
+                                                        ${i.b}
+                                                      </td>
+                                                      <td>
+                                                        ${i.t}
+                                                      </td>
+                                                    </tr>
+                                                    `;
+        });
         excelData += `
-            <tr>
-                <td>${i.time || ''}</td>
-                <td>${i.empName || ''}</td>
-                <td>${i.clientName || ''}</td>
-                <td>${i.landline || ''}</td>
-                <td>${i.mobile || ''}</td>
-                <td>${i.address || ''}</td>
-                <td>${i.isp || ''}</td>
-                <td>${i.cableLength || ''}</td>
-                <td>${i.x || ''}</td>
-                <td>${i.h || ''}</td>
-                <td>${i.l || ''}</td>
-                <td>${i.b || ''}</td>
-                <td>${i.t || ''}</td>
-            </tr>`;
-    });
-
-    excelData += `</table></body></html>`;
-
-    const blob = new Blob([excelData], { type: 'application/vnd.ms-excel' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'FTTH_Data_Backup.xls';
-    link.click();
-}
+                                                  </table>
+                                                </body>
+                                              </html>
+                                              `;
+        const blob = new Blob([excelData], { type: 'application/vnd.ms-excel' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `FTTH_Data_Backup.xls`;
+        link.click();
+    }
 
     function clearAllData() {
         if(confirm("هل أنت متأكد؟ سيتم مسح الأرشيف المحلي وقائمة المزامنة نهائياً!")) {
@@ -371,32 +435,6 @@
             showStatus("تم مسح الذاكرة 🗑️", "red");
         }
     }
-    async function sendToCloudAndSave() {
-    const data = getFormData();
-    if (!data) return;
-
-    try {
-        const response = await fetch(scriptURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            showStatus("تم الإرسال بنجاح ☁️✅", "green");
-        } else {
-            throw new Error("Error");
-        }
-
-    } catch (error) {
-        console.error(error);
-        showStatus("فشل الإرسال ❌", "red");
-    }
-
-    clearFields();
-}
                                             </script>
                                           </body>
                                         </html>
